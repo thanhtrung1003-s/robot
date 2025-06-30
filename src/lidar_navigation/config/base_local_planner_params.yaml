@@ -1,0 +1,22 @@
+TrajectoryPlannerROS:
+  # Thông số vận tốc
+  max_vel_x: 0.3       # Vận tốc tối đa tiến/lùi (m/s)
+  min_vel_x: 0.1       # Vận tốc tối thiểu tiến/lùi (m/s)
+  max_vel_theta: 1.0   # Vận tốc góc tối đa (rad/s)
+  min_in_place_vel_theta: 0.4  # Vận tốc góc tối thiểu khi xoay tại chỗ
+  
+  # Thông số gia tốc
+  acc_lim_x: 0.5       # Gia tốc tối đa theo trục x (m/s²)
+  acc_lim_theta: 0.5   # Gia tốc góc tối đa (rad/s²)
+  
+  # Loại robot
+  holonomic_robot: false  # Đặt true nếu robot có thể di chuyển ngang
+  
+  # Thông số mục tiêu
+  yaw_goal_tolerance: 0.1  # Dung sai góc khi đến mục tiêu (rad)
+  xy_goal_tolerance: 0.1   # Dung sai vị trí khi đến mục tiêu (m)
+  
+  # Thông số điều khiển
+  pdist_scale: 0.8      # Trọng số khoảng cách tới đường dẫn
+  gdist_scale: 0.8      # Trọng số khoảng cách tới mục tiêu
+  occdist_scale: 0.01   # Trọng số tránh vật cản

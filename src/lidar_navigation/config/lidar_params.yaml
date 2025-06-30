@@ -1,0 +1,11 @@
+# Lidar Processing Parameters
+min_range: 0.1      # Minimum valid range in meters
+max_range: 4.0       # Maximum valid range in meters
+eps: 0.2             # DBSCAN clustering distance threshold
+min_samples: 5       # Minimum points per cluster
+crop_width: 0.5      # Expected width between crop rows
+
+# Navigation Parameters
+target_distance: 0.5 # Minimum distance to obstacles
+max_speed: 0.2       # Maximum linear velocity (m/s)
+max_steering: 0.5    # Maximum angular velocity (rad/s)

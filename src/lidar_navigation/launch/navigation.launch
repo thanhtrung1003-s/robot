@@ -1,0 +1,37 @@
+<launch>
+  <!-- LIDAR Driver -->
+  <node pkg="rplidar_ros" type="rplidarNode" name="rplidarNode" output="screen">
+    <param name="serial_port" type="string" value="/dev/ttyUSB0"/>
+    <param name="serial_baudrate" type="int" value="115200"/>
+    <param name="frame_id" type="string" value="laser"/>
+    <param name="angle_compensate" type="bool" value="true"/>
+    <param name="scan_mode" type="string" value="Boost"/>
+  </node>
+
+  <!-- TF Configuration -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_laser" 
+        args="0 0 0 0 0 0 base_link laser 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_base" 
+        args="0 0 0 0 0 0 odom base_link 100"/>
+
+  <!-- Move Base Configuration -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find lidar_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find lidar_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find lidar_navigation)/config/local_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find lidar_navigation)/config/global_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find lidar_navigation)/config/base_local_planner_params.yaml" command="load"/>
+    
+    <param name="global_costmap/global_frame" value="odom"/>
+    <param name="global_costmap/static_map" value="false"/>
+    <param name="local_costmap/global_frame" value="odom"/>
+    <param name="local_costmap/static_map" value="false"/>
+    
+    <param name="controller_patience" value="5.0"/>
+    <param name="planner_patience" value="5.0"/>
+    <param name="recovery_behavior_enabled" value="false"/>
+  </node>
+
+  <!-- RViz Configuration -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find lidar_navigation)/rviz/navigation.rviz" required="true" output="screen"/>
+</launch>
